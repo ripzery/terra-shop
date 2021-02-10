@@ -9,6 +9,9 @@ export class Payment {
   address: string;
 
   @Column()
+  privateKey: string;
+
+  @Column()
   completed: boolean;
 
   @Column({type: 'timestamp'})
