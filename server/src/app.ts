@@ -27,6 +27,10 @@ function initDB() {
         res.json(products);
       });
 
+      app.post('/payment.create', (req: Request, res: Response) => {
+          
+      })
+
       app.listen(port, () => {
         console.log(`Terra Pay listening at http://localhost:${port}`);
       });
