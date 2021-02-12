@@ -28,8 +28,6 @@ export default class Terra {
       .balance(address)
       .then(response => response.toData());
 
-    console.log(balances);
-
     if (balances.length === 0) {
       return null;
     }
@@ -50,24 +48,27 @@ export default class Terra {
   async intervalCheckBalance(callback: (payment: Payment) => void) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(async () => {
-      for (let i = 0; i < this.watchedPayments.length; i++) {
-        if (!this.watchedPayments[i]) continue;
+      try {
+        for (let i = 0; i < this.watchedPayments.length; i++) {
+          if (!this.watchedPayments[i]) continue;
 
-        const balance = await this.checkBalance(
-          this.watchedPayments[i].address
-        );
+          const balance = await this.checkBalance(
+            this.watchedPayments[i].address
+          );
 
-        console.log(
-          `Checking balance for ${this.watchedPayments[i].address} ...`
-        );
+          console.log(
+            `Checking balance for ${this.watchedPayments[i].address} ...`
+          );
 
-        if (
-          balance &&
-          parseInt(balance.amount) >= this.watchedPayments[i].amount
-        ) {
-          console.log('callback', balance);
-          callback(this.watchedPayments[i]);
+          if (
+            balance &&
+            parseInt(balance.amount) >= this.watchedPayments[i].amount
+          ) {
+            callback(this.watchedPayments[i]);
+          }
         }
+      } catch (e) {
+        // Catch exception when accessing undefined payment which it was removed from the watchedPayments array.
       }
       this.intervalCheckBalance(callback);
     }, 3000);
