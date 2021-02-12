@@ -4,6 +4,8 @@ import express, {Request, Response} from 'express';
 import {Product} from './entity/Product';
 import {Payment} from './entity/Payment';
 import Terra from './terra';
+import Mailer from './mailer';
+import nodemailer from 'nodemailer';
 
 const TERRA_URL = process.env.TERRA_URL || '';
 const TERRA_CHAINID = process.env.TERRA_CHAINID || '';
@@ -29,6 +31,11 @@ function initDB() {
 
       app.use(express.urlencoded({extended: true}));
 
+      const mailer = new Mailer();
+      console.log('============ Init test account ============');
+      await mailer.initTestAccount();
+      console.log('Account:', mailer.account);
+
       // Query all payments from the databases
       const payments: Payment[] = await connection
         .getRepository(Payment)
@@ -43,12 +50,23 @@ function initDB() {
       terra.intervalCheckBalance(updatePayment);
 
       async function updatePayment(payment: Payment) {
+        terra.removeWatchedPayment(payment);
+
         payment.completed = true;
 
         await connection.getRepository(Payment).save(payment);
 
         console.log('Receive payment for ', payment.address);
-        terra.removeWatchedPayment(payment);
+
+        const product = await connection
+          .getRepository(Product)
+          .findOne(payment.productId);
+
+        // Send email to merchant
+        await mailer.sendToMerchant(payment);
+
+        // Send email to customer
+        await mailer.sendToCustomer('nptytn2@gmail.com', product);
       }
 
       app.get('/products', async (_req: Request, res: Response) => {
