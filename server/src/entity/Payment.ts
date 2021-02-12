@@ -1,4 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
+import {Product} from '../entity/Product';
 
 @Entity()
 export class Payment {
@@ -9,17 +18,23 @@ export class Payment {
   address: string;
 
   @Column()
-  privateKey: string;
+  mnemonic: string;
 
   @Column()
+  amount: number;
+
+  @Column('boolean', {default: false})
   completed: boolean;
+
+  @Column()
+  productId: number;
 
   @Column({type: 'timestamp'})
   valid_until: Date;
 
-  @Column({type: 'timestamp'})
+  @CreateDateColumn({type: 'timestamp'})
   created_at: Date;
 
-  @Column({type: 'timestamp'})
+  @UpdateDateColumn({type: 'timestamp'})
   updated_at: Date;
 }
