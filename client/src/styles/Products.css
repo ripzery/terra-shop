@@ -1,0 +1,23 @@
+.products-header {
+  display: inline;
+  margin: 0 auto;
+  flex-direction: row;
+}
+
+.product-container {
+
+}
+
+.products-header > h1 {
+  justify-self: center;
+}
+
+.products-header > .product-user-email {
+  justify-self: flex-end;
+}
+
+.products-user-email {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}

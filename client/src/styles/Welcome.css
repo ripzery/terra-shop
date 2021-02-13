@@ -1,0 +1,16 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-title {
+}
+
+.welcome-input-email {
+  margin: 1rem 0;
+  padding: 0.5rem;
+}
+
+.button-welcome {
+  margin-top: 1rem;
+}
