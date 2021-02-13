@@ -1,4 +1,4 @@
-import nodemailer, {TestAccount, Transporter} from 'nodemailer';
+import nodemailer, {Transporter} from 'nodemailer';
 import {Payment} from './entity/Payment';
 import {Product} from './entity/Product';
 
@@ -8,12 +8,10 @@ const testEmailAuth = {
 };
 
 export default class Mailer {
-  account: TestAccount;
   transporter: Transporter;
   constructor() {}
 
   async initTestAccount() {
-    this.account = await nodemailer.createTestAccount();
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: testEmailAuth,

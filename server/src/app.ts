@@ -31,9 +31,6 @@ function initDB() {
       app.use(express.urlencoded({extended: true}));
 
       const mailer = new Mailer();
-      console.log('============ Init test account ============');
-      await mailer.initTestAccount();
-      console.log('Account:', mailer.account);
 
       // Query all payments from the databases
       const payments: Payment[] = await connection
@@ -92,8 +89,6 @@ function initDB() {
         payment.buyerEmail = email;
         payment.mnemonic = mnemonic;
         payment.amount = product.price;
-
-        console.log(payment);
 
         await connection.getRepository(Payment).save(payment);
 
