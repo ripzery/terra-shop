@@ -7,6 +7,8 @@ const testEmailAuth = {
   pass: process.env.TEST_EMAIL_PASSWORD || '',
 };
 
+const merchantEmail = process.env.MERCHANT_EMAIL_ADDRESS || '';
+
 export default class Mailer {
   transporter: Transporter;
   constructor() {}
@@ -31,7 +33,7 @@ export default class Mailer {
   sendToMerchant(payment: Payment) {
     return this.transporter.sendMail({
       from: '"Terra Pay" <terra@example.com>',
-      to: this.account.user,
+      to: merchantEmail,
       subject: `Received payment in ${payment.address} successfully.`,
       text: `Payment has been made from ${payment.buyerEmail} with amount ${payment.amount} UST!`,
     });

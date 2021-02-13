@@ -5,6 +5,7 @@ import {Product} from './entity/Product';
 import {Payment} from './entity/Payment';
 import Terra from './terra';
 import Mailer from './mailer';
+import cors from 'cors';
 
 const TERRA_URL = process.env.TERRA_URL || '';
 const TERRA_CHAINID = process.env.TERRA_CHAINID || '';
@@ -29,6 +30,7 @@ function initDB() {
       const terra = new Terra(TERRA_URL, TERRA_CHAINID);
 
       app.use(express.urlencoded({extended: true}));
+      app.use(cors());
 
       const mailer = new Mailer();
 
