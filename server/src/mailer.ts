@@ -34,8 +34,8 @@ export default class Mailer {
     return this.transporter.sendMail({
       from: '"Terra Pay" <terra@example.com>',
       to: this.account.user,
-      subject: `Received payment to ${payment.address} successfully.`,
-      text: `Payment has been made from <buyer_address> with amount ${payment.amount} UST!`,
+      subject: `Received payment in ${payment.address} successfully.`,
+      text: `Payment has been made from ${payment.buyerAddress} (${payment.buyerEmail}) with amount ${payment.amount} UST!`,
     });
   }
 }

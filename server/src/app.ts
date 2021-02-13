@@ -65,7 +65,7 @@ function initDB() {
         await mailer.sendToMerchant(payment);
 
         // Send email to customer
-        await mailer.sendToCustomer('nptytn2@gmail.com', product);
+        await mailer.sendToCustomer(payment.buyerEmail, product);
       }
 
       app.get('/products', async (_req: Request, res: Response) => {
