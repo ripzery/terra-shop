@@ -5,7 +5,6 @@ import {Product} from './entity/Product';
 import {Payment} from './entity/Payment';
 import Terra from './terra';
 import Mailer from './mailer';
-import nodemailer from 'nodemailer';
 
 const TERRA_URL = process.env.TERRA_URL || '';
 const TERRA_CHAINID = process.env.TERRA_CHAINID || '';
@@ -76,7 +75,7 @@ function initDB() {
 
       app.post('/payment.create', async (req: Request, res: Response) => {
         ('');
-        const {productId} = req.body;
+        const {productId, email} = req.body;
         const {mnemonic, address} = terra.createAddress();
 
         // valid for 5 mins
@@ -89,7 +88,8 @@ function initDB() {
         const payment = new Payment();
         payment.productId = product.id;
         payment.address = address;
-        payment.valid_until = validUntil;
+        payment.validUntil = validUntil;
+        payment.buyerEmail = email;
         payment.mnemonic = mnemonic;
         payment.amount = product.price;
 

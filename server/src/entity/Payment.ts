@@ -4,10 +4,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
-  JoinColumn,
-  OneToOne,
 } from 'typeorm';
-import {Product} from '../entity/Product';
 
 @Entity()
 export class Payment {
@@ -27,14 +24,20 @@ export class Payment {
   completed: boolean;
 
   @Column()
+  buyerEmail: string;
+
+  @Column()
+  buyerAddress: string;
+
+  @Column()
   productId: number;
 
   @Column({type: 'timestamp'})
-  valid_until: Date;
+  validUntil: Date;
 
   @CreateDateColumn({type: 'timestamp'})
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({type: 'timestamp'})
-  updated_at: Date;
+  updatedAt: Date;
 }
