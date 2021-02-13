@@ -27,9 +27,6 @@ export class Payment {
   buyerEmail: string;
 
   @Column()
-  buyerAddress: string;
-
-  @Column()
   productId: number;
 
   @Column({type: 'timestamp'})

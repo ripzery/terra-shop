@@ -61,11 +61,11 @@ function initDB() {
           .getRepository(Product)
           .findOne(payment.productId);
 
-        // Send email to merchant
-        await mailer.sendToMerchant(payment);
-
         // Send email to customer
         await mailer.sendToCustomer(payment.buyerEmail, product);
+
+        // Send email to merchant
+        await mailer.sendToMerchant(payment);
       }
 
       app.get('/products', async (_req: Request, res: Response) => {

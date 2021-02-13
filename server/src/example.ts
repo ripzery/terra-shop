@@ -54,9 +54,9 @@ async function buy() {
     .then(response => response.toData())
     .then(response => response[0]);
 
-  const coin = new Coin(denom, amount);
+  // const coin = new Coin(denom, amount);
 
-  console.log('Received', `${coin.toString()}`);
+  // console.log('Received', `${coin.toString()}`);
 }
 
 buy();
