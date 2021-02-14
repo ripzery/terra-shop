@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles/App.css";
 import Products from "./pages/Products";
 import Welcome from "./pages/Welcome";
+import Payment from "./pages/Payment";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -12,6 +13,9 @@ function App() {
           <Switch>
             <Route path="/products">
               <Products />
+            </Route>
+            <Route path="/payment">
+              <Payment />
             </Route>
             <Route path="/">
               <Welcome />

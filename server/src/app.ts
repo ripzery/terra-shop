@@ -29,6 +29,7 @@ function initDB() {
       const app = express();
       const terra = new Terra(TERRA_URL, TERRA_CHAINID);
 
+      app.use(express.json());
       app.use(express.urlencoded({extended: true}));
       app.use(cors());
 
@@ -73,7 +74,6 @@ function initDB() {
       });
 
       app.post('/payment.create', async (req: Request, res: Response) => {
-        ('');
         const {productId, email} = req.body;
         const {mnemonic, address} = terra.createAddress();
 

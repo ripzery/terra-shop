@@ -11,9 +11,7 @@ const merchantEmail = process.env.MERCHANT_EMAIL_ADDRESS || '';
 
 export default class Mailer {
   transporter: Transporter;
-  constructor() {}
-
-  async initTestAccount() {
+  constructor() {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: testEmailAuth,

@@ -8,3 +8,7 @@ export interface ProductItem {
 export interface User {
   email: string;
 }
+
+export interface PaymentItem {
+  address: string;
+}
