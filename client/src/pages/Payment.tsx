@@ -1,10 +1,11 @@
-import { History } from "history";
 import React, { useEffect, useState } from "react";
+import { History } from "history";
 import { useLocation, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { ProductItem, PaymentItem } from "../types";
 import { Extension, MsgSend, StdFee } from "@terra-money/terra.js";
 import { requestPayment } from "../utils/client";
+import Countdown from "../components/Countdown";
 import "../styles/Payment.css";
 
 interface ProductState {
@@ -21,11 +22,11 @@ function Payment({ history }: PaymentProps) {
   const [payment, setPayment] = useState<PaymentItem | undefined>();
   const location = useLocation<ProductState | undefined>();
   const product = location.state?.product;
-  const email = localStorage.getItem("email") || "";
   const fromAddress = localStorage.getItem("address") || "";
 
   useEffect(() => {
     async function requestForPaymentAddress(productId: number) {
+      const email = localStorage.getItem("email") || "";
       const _payment = await requestPayment(productId, email);
       setPayment(_payment);
     }
@@ -33,8 +34,11 @@ function Payment({ history }: PaymentProps) {
       return history.goBack();
     }
 
-    requestForPaymentAddress(product?.id);
-  }, [email, history, product]);
+    if (!payment) {
+      console.log("Request for payment");
+      requestForPaymentAddress(product?.id);
+    }
+  }, [history, payment, product]);
 
   function onClickPay() {
     extension.post({
@@ -58,6 +62,10 @@ function Payment({ history }: PaymentProps) {
         <p>{product?.desc}</p>
         <p>Price: {product?.price}</p>
         <p>Payment address: {payment?.address || "Loading"}</p>
+        <div className="payment-countdown">
+          <p>Payment expired in:</p>
+          <Countdown expiredAt={payment?.validUntil} />
+        </div>
         <a className="button payment-pay-btn" href="#" onClick={onClickPay}>
           Pay
         </a>

@@ -11,4 +11,5 @@ export interface User {
 
 export interface PaymentItem {
   address: string;
+  validUntil: string;
 }
