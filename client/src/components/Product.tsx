@@ -14,9 +14,10 @@ function Product({ product }: ProductProps) {
     <div className="product-container">
       <h2 className="product-title">{product.title}</h2>
       <div className="product-desc">{product.desc}</div>
-      <button className="product-buy" onClick={onClickBuy}>
+      <p className="product-price">Price: {product.price / 1e6} UST</p>
+      <a className="product-buy" onClick={onClickBuy} href="#">
         Buy
-      </button>
+      </a>
     </div>
   );
 }

@@ -1,15 +1,14 @@
 .products-header {
-  display: inline;
-  margin: 0 auto;
-  flex-direction: row;
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 
-.product-container {
-
+.products-container {
 }
 
 .products-header > h1 {
-  justify-self: center;
+  flex: 1;
 }
 
 .products-header > .product-user-email {
@@ -19,5 +18,9 @@
 .products-user-email {
   display: flex;
   flex-direction: column;
-  align-self: center;
+  align-items: flex-end;
+}
+
+.products-btn {
+  color: var(--color-accent);
 }
