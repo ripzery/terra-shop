@@ -35,12 +35,17 @@ function initDB() {
 
       const mailer = new Mailer();
 
-      // Query all payments from the databases
-      const payments: Payment[] = await connection
+      // Query all on-going payments from the databases
+      const _payments: Payment[] = await connection
         .getRepository(Payment)
         .createQueryBuilder('payment')
         .where('payment.completed = false')
         .getMany();
+
+      // Filters expired payment out
+      const payments = _payments.filter(p => {
+        p.validUntil.getTime() > new Date().getTime();
+      });
 
       // Added watched addresses from the databases
       payments.forEach(payment => terra.addWatchedPayment(payment));

@@ -50,21 +50,24 @@ export default class Terra {
     this.timeout = setTimeout(async () => {
       try {
         for (let i = 0; i < this.watchedPayments.length; i++) {
-          if (!this.watchedPayments[i]) continue;
+          const _payment = this.watchedPayments[i];
 
-          const balance = await this.checkBalance(
-            this.watchedPayments[i].address
-          );
+          if (!_payment) continue;
 
-          console.log(
-            `Checking balance for ${this.watchedPayments[i].address} ...`
-          );
+          // Remove from watchedPayments array if expired.
+          if (this.isExpired(_payment)) {
+            console.log(`${_payment.address} has expired!`);
+            this.removeWatchedPayment(_payment);
+            i--;
+            continue;
+          }
 
-          if (
-            balance &&
-            parseInt(balance.amount) >= this.watchedPayments[i].amount
-          ) {
-            callback(this.watchedPayments[i]);
+          const balance = await this.checkBalance(_payment.address);
+
+          console.log(`Checking balance for ${_payment.address} ...`);
+
+          if (balance && parseInt(balance.amount) >= _payment.amount) {
+            callback(_payment);
           }
         }
       } catch (e) {
@@ -72,5 +75,9 @@ export default class Terra {
       }
       this.intervalCheckBalance(callback);
     }, 3000);
+  }
+
+  private isExpired(payment: Payment) {
+    return new Date().getTime() > payment.validUntil.getTime();
   }
 }
