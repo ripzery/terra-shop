@@ -8,6 +8,10 @@
   align-self: center;
 }
 
+.payment-pay-btn:focus {
+  outline: none;
+}
+
 .payments-container {
   padding: 2rem 0rem;
   display: flex;

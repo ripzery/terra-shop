@@ -4,6 +4,11 @@
   --color-accent: #1eb2ff;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -41,10 +46,19 @@ code {
   user-select: none;
   min-width: 160px;
   text-decoration: none;
+  cursor: pointer;
+  background: transparent;
 }
 
 .button:hover {
   opacity: 0.75;
+}
+
+.button:focus {
+  outline: none;
+  background-color: transparent;
+  border-style: outset;
+  cursor: pointer;
 }
 
 .button-disabled {

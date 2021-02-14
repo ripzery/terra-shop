@@ -8,9 +8,6 @@ interface ProductProps {
 }
 
 function Product({ product }: ProductProps) {
-  function onClickBuy() {
-    console.log("Buy", product);
-  }
   return (
     <div className="product-container">
       <h2 className="product-title">{product.title}</h2>
@@ -18,7 +15,6 @@ function Product({ product }: ProductProps) {
       <p className="product-price">Price: {product.price / 1e6} UST</p>
       <Link
         className="product-buy"
-        onClick={onClickBuy}
         to={{ pathname: "/payment", state: { product } }}
       >
         Buy

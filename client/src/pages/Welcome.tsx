@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/Welcome.css";
 import { Link, withRouter } from "react-router-dom";
 import { History } from "history";
+import { get, set } from "../utils/localstorage";
 
 const emailRegex = new RegExp(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -18,13 +19,12 @@ function Welcome({ history }: WelcomeProps) {
   );
 
   useEffect(() => {
-    if (localStorage.getItem("email")) {
+    if (get("email")) {
       history.push("/products");
     }
   }, [history]);
 
   function onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(e.target.value);
     setEmail(e.target.value);
     if (!emailRegex.test(e.target.value)) {
       setBtnClasses("button button-welcome button-disabled");
@@ -41,7 +41,7 @@ function Welcome({ history }: WelcomeProps) {
         className="welcome-input-email"
         onChange={onEmailChanged}
         value={email}
-        placeholder="Enter your email"
+        placeholder="Enter your email (currently support gmail)"
       />
       <Link
         to={{ pathname: "/products", state: { email } }}

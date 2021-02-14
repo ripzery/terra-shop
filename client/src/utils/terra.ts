@@ -1,4 +1,4 @@
-import { LCDClient, BankAPI, Coins } from "@terra-money/terra.js";
+import { LCDClient, BankAPI } from "@terra-money/terra.js";
 import { APIRequester } from "@terra-money/terra.js/dist/client/lcd/APIRequester";
 require("dotenv").config();
 

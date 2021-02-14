@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Coin, Coins, Extension } from "@terra-money/terra.js";
 import Terra from "../utils/terra";
+import { set, get } from "../utils/localstorage";
 import "../styles/TerraConnectBtn.css";
 
 interface TerraConnectBtnProps {
@@ -16,7 +17,7 @@ function TerraConnectBtn({ children }: TerraConnectBtnProps) {
   );
   const [btnText, setBtnText] = useState<string>(children);
   const [balance, setBalance] = useState<Coin | undefined>();
-  const walletAddress = localStorage.getItem("address");
+  const walletAddress = get("address");
 
   useEffect(() => {
     if (!extension.isAvailable && !walletAddress) {
@@ -42,7 +43,7 @@ function TerraConnectBtn({ children }: TerraConnectBtnProps) {
       console.log("click");
       extension.request("connect").then(async (resp: any) => {
         const address = resp.payload.address;
-        localStorage.setItem("address", address);
+        set("address", address);
         setBtnText(address);
       });
     }
@@ -50,9 +51,9 @@ function TerraConnectBtn({ children }: TerraConnectBtnProps) {
 
   return (
     <>
-      <a className={btnClasses} href="#" onClick={() => onClick()}>
+      <button className={btnClasses} onClick={() => onClick()}>
         {btnText}
-      </a>
+      </button>
       {balance && (
         <span>Balance: {balance?.amount.div(1e6).toFixed(2)} UST</span>
       )}

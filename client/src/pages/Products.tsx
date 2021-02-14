@@ -7,6 +7,7 @@ import { useLocation, Link, withRouter } from "react-router-dom";
 import { User } from "../types";
 import "../styles/Products.css";
 import { History } from "history";
+import { set, get, clear } from "../utils/localstorage";
 
 interface ProductsProps {
   history: History;
@@ -17,10 +18,10 @@ function Products({ history }: ProductsProps) {
   const location = useLocation<User | undefined>();
 
   if (location.state?.email) {
-    localStorage.setItem("email", location.state.email);
+    set("email", location.state.email);
   }
 
-  const email = location.state?.email || localStorage.getItem("email");
+  const email = location.state?.email || get("email");
 
   if (!email) {
     history.push("/");
@@ -40,7 +41,7 @@ function Products({ history }: ProductsProps) {
   }, []);
 
   function onPressedLogOut() {
-    localStorage.clear();
+    clear();
   }
 
   return (

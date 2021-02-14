@@ -7,6 +7,7 @@ import { Extension, MsgSend, StdFee } from "@terra-money/terra.js";
 import { requestPayment } from "../utils/client";
 import Countdown from "../components/Countdown";
 import "../styles/Payment.css";
+import { set, get } from "../utils/localstorage";
 
 interface ProductState {
   product: ProductItem;
@@ -22,11 +23,11 @@ function Payment({ history }: PaymentProps) {
   const [payment, setPayment] = useState<PaymentItem | undefined>();
   const location = useLocation<ProductState | undefined>();
   const product = location.state?.product;
-  const fromAddress = localStorage.getItem("address") || "";
+  const fromAddress = get("address") || "";
 
   useEffect(() => {
     async function requestForPaymentAddress(productId: number) {
-      const email = localStorage.getItem("email") || "";
+      const email = get("email") || "";
       const _payment = await requestPayment(productId, email);
       setPayment(_payment);
     }
@@ -60,15 +61,15 @@ function Payment({ history }: PaymentProps) {
       <div className="payment-content-container">
         <h2>{product?.title}</h2>
         <p>{product?.desc}</p>
-        <p>Price: {product?.price}</p>
+        <p>Price: {product?.price && product.price / 1e6}</p>
         <p>Payment address: {payment?.address || "Loading"}</p>
         <div className="payment-countdown">
           <p>Payment expired in:</p>
           <Countdown expiredAt={payment?.validUntil} />
         </div>
-        <a className="button payment-pay-btn" href="#" onClick={onClickPay}>
+        <button className="button payment-pay-btn" onClick={onClickPay}>
           Pay
-        </a>
+        </button>
       </div>
     </div>
   );
