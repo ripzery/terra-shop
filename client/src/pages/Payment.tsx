@@ -1,9 +1,11 @@
 import { History } from "history";
 import React, { useEffect, useState } from "react";
 import { useLocation, withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import { ProductItem, PaymentItem } from "../types";
 import { Extension, MsgSend, StdFee } from "@terra-money/terra.js";
 import { requestPayment } from "../utils/client";
+import "../styles/Payment.css";
 
 interface ProductState {
   product: ProductItem;
@@ -46,12 +48,17 @@ function Payment({ history }: PaymentProps) {
   }
 
   return (
-    <div>
+    <div className="payments-container">
+      <Link to="/products" className="payment-back-btn">
+        Back to Products
+      </Link>
       <h1>Payment</h1>
-      <div className="payment-container">
+      <div className="payment-content-container">
         <h2>{product?.title}</h2>
+        <p>{product?.desc}</p>
         <p>Price: {product?.price}</p>
-        <a className="button" href="#" onClick={onClickPay}>
+        <p>Payment address: {payment?.address || "Loading"}</p>
+        <a className="button payment-pay-btn" href="#" onClick={onClickPay}>
           Pay
         </a>
       </div>

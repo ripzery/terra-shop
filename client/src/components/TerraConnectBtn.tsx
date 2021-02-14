@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Coin, Coins, Extension, Wallet } from "@terra-money/terra.js";
+import { Coin, Coins, Extension } from "@terra-money/terra.js";
 import Terra from "../utils/terra";
 import "../styles/TerraConnectBtn.css";
 

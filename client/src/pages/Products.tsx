@@ -46,7 +46,7 @@ function Products({ history }: ProductsProps) {
   return (
     <>
       <div className="products-header">
-        <h1>Terra Shop</h1>
+        <h1>Terra Book Shop</h1>
         <div className="products-user-email">
           <TerraConnectBtn>Connect to Terra</TerraConnectBtn>
           <span>{email}</span>

@@ -1,0 +1,20 @@
+.payment-back-btn {
+  color: var(--color-accent);
+}
+
+.payment-pay-btn {
+  margin-top: 2rem;
+  max-width: 160px;
+  align-self: center;
+}
+
+.payments-container {
+  padding: 2rem 0rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-content-container {
+  display: flex;
+  flex-direction: column;
+}

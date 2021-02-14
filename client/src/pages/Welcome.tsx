@@ -35,7 +35,7 @@ function Welcome({ history }: WelcomeProps) {
 
   return (
     <div className="welcome-container">
-      <h1 className="welcome-title">Welcome to Terra Shop!</h1>
+      <h1 className="welcome-title">Welcome to Terra Book Shop!</h1>
       <input
         type="email"
         className="welcome-input-email"
