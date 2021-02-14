@@ -1,13 +1,12 @@
 import nodemailer, {Transporter} from 'nodemailer';
 import {Payment} from './entity/Payment';
 import {Product} from './entity/Product';
+import {MAILER_EMAIL, MAILER_PASSWORD, MERCHANT_EMAIL_ADDRESS} from './config';
 
 const testEmailAuth = {
-  user: process.env.TEST_EMAIL_ADDRESS || '',
-  pass: process.env.TEST_EMAIL_PASSWORD || '',
+  user: MAILER_EMAIL,
+  pass: MAILER_PASSWORD,
 };
-
-const merchantEmail = process.env.MERCHANT_EMAIL_ADDRESS || '';
 
 export default class Mailer {
   transporter: Transporter;
@@ -31,7 +30,7 @@ export default class Mailer {
   sendToMerchant(payment: Payment) {
     return this.transporter.sendMail({
       from: '"Terra Pay" <terra@example.com>',
-      to: merchantEmail,
+      to: MERCHANT_EMAIL_ADDRESS,
       subject: `Received payment in ${payment.address} successfully.`,
       text: `Payment has been made from ${payment.buyerEmail} with amount ${payment.amount} UST!`,
     });

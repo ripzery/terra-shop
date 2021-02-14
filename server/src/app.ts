@@ -5,10 +5,8 @@ import {Product} from './entity/Product';
 import {Payment} from './entity/Payment';
 import Terra from './terra';
 import Mailer from './mailer';
+import {TERRA_URL, TERRA_CHAINID, PORT} from './config';
 import cors from 'cors';
-
-const TERRA_URL = process.env.TERRA_URL || '';
-const TERRA_CHAINID = process.env.TERRA_CHAINID || '';
 
 function initDB() {
   createConnection({
@@ -25,10 +23,9 @@ function initDB() {
     .then(async connection => {
       console.log('DB connection has been established successfully.');
 
-      const port = 3000;
-      const app = express();
       const terra = new Terra(TERRA_URL, TERRA_CHAINID);
 
+      const app = express();
       app.use(express.json());
       app.use(express.urlencoded({extended: true}));
       app.use(cors());
@@ -108,8 +105,8 @@ function initDB() {
         res.json(payment);
       });
 
-      app.listen(port, () => {
-        console.log(`Terra Pay listening at http://localhost:${port}`);
+      app.listen(PORT, () => {
+        console.log(`Terra Pay listening at http://localhost:${PORT}`);
       });
     })
     .catch(error => console.log(error));

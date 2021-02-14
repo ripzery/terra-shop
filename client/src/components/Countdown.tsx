@@ -15,7 +15,6 @@ function Countdown({ expiredAt }: CountdownProps) {
       const millisUntilExpired =
         new Date(expiredAt).getTime() - new Date().getTime();
       const secondsUntilExpired = Math.floor(millisUntilExpired / 1000);
-
       const minutesUntilExpired = Math.floor(secondsUntilExpired / 60);
       const secondsInMinute = secondsUntilExpired % 60;
 
