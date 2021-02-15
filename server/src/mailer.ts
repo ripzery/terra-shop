@@ -30,7 +30,9 @@ export default class Mailer {
       from: '"Terra Pay" <terra@example.com>',
       to: MERCHANT_EMAIL_ADDRESS,
       subject: `Received payment in ${payment.address} successfully.`,
-      text: `Payment has been made from ${payment.buyerEmail} with amount ${payment.amount} UST!`,
+      text: `Payment has been made from ${payment.buyerEmail} with amount ${
+        payment.amount / 1e6
+      } UST!`,
     });
   }
 }
