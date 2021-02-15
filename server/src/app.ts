@@ -23,14 +23,18 @@ function initDB() {
     .then(async connection => {
       console.log('DB connection has been established successfully.');
 
+      const mailer = new Mailer();
+
+      // Initialize terra client for two usages
+      // 1. Generating new payment addresses.
+      // 2. Adding payment address to watch list.
       const terra = new Terra(TERRA_URL, TERRA_CHAINID);
 
+      // Initialize express app
       const app = express();
       app.use(express.json());
       app.use(express.urlencoded({extended: true}));
       app.use(cors());
-
-      const mailer = new Mailer();
 
       // Query all on-going payments from the databases
       const _payments: Payment[] = await connection
@@ -77,15 +81,40 @@ function initDB() {
 
       app.post('/payment.create', async (req: Request, res: Response) => {
         const {productId, email} = req.body;
+
+        if (!productId) {
+          return res.status(400).json({
+            success: false,
+            error: 'Specify productId for payment.',
+          });
+        }
+
+        if (!email) {
+          return res.status(400).json({
+            success: false,
+            error: 'Specify customer email for payment.',
+          });
+        }
+
+        // Generate new address and mnemonic for receiving payment
         const {mnemonic, address} = terra.createAddress();
 
         // valid for 5 mins
         const validUntil = new Date(new Date().getTime() + 5 * 60000);
 
+        // Find product details from given product id
         const product = await connection
           .getRepository(Product)
           .findOne(productId);
 
+        if (!product) {
+          return res.status(400).json({
+            success: false,
+            error: 'Invalid productId for payment.',
+          });
+        }
+
+        // Create payment entry
         const payment = new Payment();
         payment.productId = product.id;
         payment.address = address;
@@ -94,6 +123,7 @@ function initDB() {
         payment.mnemonic = mnemonic;
         payment.amount = product.price;
 
+        // Save payment entry to database.
         await connection.getRepository(Payment).save(payment);
 
         // Add payment address to watch list.
@@ -102,6 +132,7 @@ function initDB() {
         // cleanup mnemonic before returns
         delete payment.mnemonic;
 
+        // Return 200 response
         res.json(payment);
       });
 

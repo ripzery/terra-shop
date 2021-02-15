@@ -14,7 +14,6 @@
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
-    "example": "npx ts-node src/example.ts",
     "start": "npx ts-node src/app.ts",
     "fix": "gts fix",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",

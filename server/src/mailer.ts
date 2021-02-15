@@ -3,17 +3,15 @@ import {Payment} from './entity/Payment';
 import {Product} from './entity/Product';
 import {MAILER_EMAIL, MAILER_PASSWORD, MERCHANT_EMAIL_ADDRESS} from './config';
 
-const testEmailAuth = {
-  user: MAILER_EMAIL,
-  pass: MAILER_PASSWORD,
-};
-
 export default class Mailer {
   transporter: Transporter;
   constructor() {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
-      auth: testEmailAuth,
+      auth: {
+        user: MAILER_EMAIL,
+        pass: MAILER_PASSWORD,
+      },
     });
   }
 
