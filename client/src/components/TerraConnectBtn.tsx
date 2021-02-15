@@ -40,7 +40,6 @@ function TerraConnectBtn({ children }: TerraConnectBtnProps) {
 
   async function onClick() {
     if (!walletAddress) {
-      console.log("click");
       extension.request("connect").then(async (resp: any) => {
         const address = resp.payload.address;
         set("address", address);
