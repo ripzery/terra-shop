@@ -1,5 +1,5 @@
 require('dotenv').config();
-import {LCDClient, MnemonicKey, BankAPI} from '@terra-money/terra.js';
+import {LCDClient, MnemonicKey, BankAPI, Wallet} from '@terra-money/terra.js';
 import {Payment} from './entity/Payment';
 import {APIRequester} from '@terra-money/terra.js/dist/client/lcd/APIRequester';
 
@@ -51,9 +51,7 @@ export default class Terra {
       try {
         for (let i = 0; i < this.watchedPayments.length; i++) {
           const _payment = this.watchedPayments[i];
-
           if (!_payment) continue;
-
           // Remove from watchedPayments array if expired.
           if (this.isExpired(_payment)) {
             console.log(`${_payment.address} has expired!`);
@@ -61,11 +59,8 @@ export default class Terra {
             i--;
             continue;
           }
-
           const balance = await this.checkBalance(_payment.address);
-
           console.log(`Checking balance for ${_payment.address} ...`);
-
           if (balance && parseInt(balance.amount) >= _payment.amount) {
             callback(_payment);
           }
