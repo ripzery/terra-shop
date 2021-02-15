@@ -1,0 +1,11 @@
+.payment-successful-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.payment-successful-btn {
+  color: var(--color-accent);
+  margin-top: 2rem;
+  align-self: center;
+}

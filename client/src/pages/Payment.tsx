@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { History } from "history";
-import { useLocation, withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import { ProductItem, PaymentItem } from "../types";
 import { Extension, MsgSend, StdFee } from "@terra-money/terra.js";
 import { requestPayment } from "../utils/client";
@@ -13,15 +12,12 @@ interface ProductState {
   product: ProductItem;
 }
 
-interface PaymentProps {
-  history: History;
-}
-
 const extension = new Extension();
 
-function Payment({ history }: PaymentProps) {
+function Payment() {
   const [payment, setPayment] = useState<PaymentItem | undefined>();
   const location = useLocation<ProductState | undefined>();
+  const history = useHistory();
   const product = location.state?.product;
   const fromAddress = get("address") || "";
 
@@ -36,12 +32,21 @@ function Payment({ history }: PaymentProps) {
     }
 
     if (!payment) {
-      console.log("Request for payment");
       requestForPaymentAddress(product?.id);
+    } else {
+      extension.on("onPost", (payload) => {
+        if (payload.success) {
+          history.push("/payment-success", {
+            payment,
+            product,
+            txHash: payload.result.txhash,
+          });
+        }
+      });
     }
   }, [history, payment, product]);
 
-  function onClickPay() {
+  async function onClickPay() {
     extension.post({
       msgs: [
         new MsgSend(fromAddress, payment?.address || "", {
@@ -75,4 +80,4 @@ function Payment({ history }: PaymentProps) {
   );
 }
 
-export default withRouter(Payment);
+export default Payment;

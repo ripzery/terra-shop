@@ -3,6 +3,7 @@ import "./styles/App.css";
 import Products from "./pages/Products";
 import Welcome from "./pages/Welcome";
 import Payment from "./pages/Payment";
+import PaymentSuccessful from "./pages/PaymentSuccessful";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
             </Route>
             <Route path="/payment">
               <Payment />
+            </Route>
+            <Route path="/payment-success">
+              <PaymentSuccessful />
             </Route>
             <Route path="/">
               <Welcome />
