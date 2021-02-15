@@ -42,6 +42,7 @@ const ProductSeed = [
 ];
 
 export default class CreateProducts implements Seeder {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async run(factory: Factory, connection: Connection): Promise<any> {
     await connection
       .createQueryBuilder()
