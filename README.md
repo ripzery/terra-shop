@@ -13,7 +13,7 @@ Open `.env.server` and edit `<MERCHANT_EMAIL_ADDRESS>` to an email for receiving
 
 Other fields are optional.
 
-# Install
+# Installation
 
 1. Install dependencies for client
 

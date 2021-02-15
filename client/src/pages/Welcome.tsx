@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/Welcome.css";
 import { Link, withRouter } from "react-router-dom";
 import { History } from "history";
-import { get, set } from "../utils/localstorage";
+import { get } from "../utils/localstorage";
 
 const emailRegex = new RegExp(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

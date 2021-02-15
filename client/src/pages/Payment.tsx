@@ -7,7 +7,7 @@ import { Extension, MsgSend, StdFee } from "@terra-money/terra.js";
 import { requestPayment } from "../utils/client";
 import Countdown from "../components/Countdown";
 import "../styles/Payment.css";
-import { set, get } from "../utils/localstorage";
+import { get } from "../utils/localstorage";
 
 interface ProductState {
   product: ProductItem;

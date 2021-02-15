@@ -5,7 +5,7 @@ import {Product} from './entity/Product';
 import {Payment} from './entity/Payment';
 import Terra from './terra';
 import Mailer from './mailer';
-import {TERRA_URL, TERRA_CHAINID, PORT} from './config';
+import {TERRA_URL, TERRA_CHAINID, PORT, MERCHANT_EMAIL_ADDRESS} from './config';
 import cors from 'cors';
 
 function initDB() {
@@ -61,7 +61,7 @@ function initDB() {
 
         await connection.getRepository(Payment).save(payment);
 
-        console.log('Receive payment for ', payment.address);
+        console.log('Receive payment for', payment.address);
 
         const product = await connection
           .getRepository(Product)
@@ -69,9 +69,11 @@ function initDB() {
 
         // Send email to customer
         await mailer.sendToCustomer(payment.buyerEmail, product);
+        console.log(`Sent email to customer at ${payment.buyerEmail}.`);
 
         // Send email to merchant
         await mailer.sendToMerchant(payment);
+        console.log(`Sent email to merchant at ${MERCHANT_EMAIL_ADDRESS}.`);
       }
 
       app.get('/products', async (_req: Request, res: Response) => {
