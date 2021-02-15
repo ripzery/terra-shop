@@ -39,4 +39,8 @@ Run `make init-server-db`
 
 1. Run server app `make start-server-app`
 
+By default, server app will be running at http://localhost:3000
+
 2. Run client app `make start-client-app`
+
+By default, client app will be running at http://localhost:3001
